@@ -1,2 +1,2 @@
-# Web Mapping - Unit 1
-Repository for Unit 1 of the Web Mapping Workbook.
+# 575 Unit 1 Sample Repository
+Repository for Activity 1 of Geog 575
