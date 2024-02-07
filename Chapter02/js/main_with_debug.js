@@ -33,7 +33,8 @@ function initialize(){
 	// add a new row in the table for each city
 	for(var i = 0; i < cityPop.length; i++){
 		//assign longer html strings to a variable
-		var rowHtml = "<tr><td>" + cityPop[i].city + "</td><td>" + cityPop[i].population + "</td></tr>";
+		var rowHtml = "<tr><td>" + cityPop[i].city + "</td><td>" 
+			+ cityPop[i].population + "</td></tr>";
 		//add the row's html string to the table
 		table.insertAdjacentHTML('beforeend',rowHtml);
 	}
@@ -41,16 +42,14 @@ function initialize(){
 	var myDiv = document.querySelector("#myDiv").appendChild(table);
 
 	addColumns(cityPop); // add the city size data in each row under the City Size header
-	addEvents();
+	addEvents(); // add events for mouseover and click
 
 
 
 }
 
-// this function adds columns for the data from the cityPop object
+// this function adds a new column of data for City Size
 function addColumns(cityPop){
-    let allRows = document.querySelectorAll("tr");
-
     document.querySelectorAll("tr").forEach(function(row,i){
     	if (i == 0){
     		row.insertAdjacentHTML('beforeend', '<th>City Size</th>');
@@ -74,8 +73,8 @@ function addColumns(cityPop){
 
 function addEvents(){
 
+	// set the table to a random rgb value when the user hovers
 	document.querySelector("table").addEventListener("mouseover", function(){
-		
 		var color = "rgb(";
 		
 		for (var i=0; i<3; i++){
