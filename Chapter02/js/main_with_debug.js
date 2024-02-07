@@ -1,11 +1,4 @@
-//initialize function called when the script loads
 function initialize(){
-	cities();
-};
-
-//function to create a table with cities and their populations
-function cities(){
-	//define two arrays for cities and population
 	var cityPop = [
 		{ 
 			city: 'Madison',
@@ -25,100 +18,93 @@ function cities(){
 		}
 	];
 
-	//create a table element
+	// create a blank table element
 	var table = document.createElement("table");
 
-	//create a header row element and append it to the table
+	// create a blank table row element for the header
 	var headerRow = document.createElement("tr");
+ 
+	// add "City", "Population", and "City Size" as headers
+	headerRow.insertAdjacentHTML("beforeend","<th>City</th><th>Population</th>")
+
+	// add the headers to the table
 	table.appendChild(headerRow);
 
-	//create the "City" and "Population" column headers
-	headerRow.insertAdjacentHTML("beforeend","<th>City</th><th>Population</th>")
-	
-	//loop to add a new row for each city
-    cityPop.forEach(function(cityObject){
+	// add a new row in the table for each city
+	for(var i = 0; i < cityPop.length; i++){
 		//assign longer html strings to a variable
-		var rowHtml = "<tr><td>" + cityObject.city + "</td><td>" + cityObject.population + "</td></tr>";
+		var rowHtml = "<tr><td>" + cityPop[i].city + "</td><td>" + cityPop[i].population + "</td></tr>";
 		//add the row's html string to the table
 		table.insertAdjacentHTML('beforeend',rowHtml);
-	})
+	}
 	
-	//append the table element to the div
-	document.querySelector("#mydiv").appendChild(table);
+	var myDiv = document.querySelector("#myDiv").appendChild(table);
 
-    addColumns(cityPop);
-    addEvents();
+	addColumns(cityPop); // add the city size data in each row under the City Size header
+	addEvents();
 
-};
 
-//function to add a new column to the table
+
+}
+
+// this function adds columns for the data from the cityPop object
 function addColumns(cityPop){
-    
-	//select all column rows
-	var rows = document.querySelectorAll("tr")
-	//loop to add a new column to each row
-	document.querySelectorAll("tr").forEach(function(row,i){
-		//for first row in the table, add the column header
-		if (i == 0){
-    		//create new header element and add it to the table
-			row.insertAdjacentHTML('beforeend', '<th>City Size</th>');
+    let allRows = document.querySelectorAll("tr");
+
+    document.querySelectorAll("tr").forEach(function(row,i){
+    	if (i == 0){
+    		row.insertAdjacentHTML('beforeend', '<th>City Size</th>');
     	} else {
     		var citySize;
 
     		if (cityPop[i-1].population < 100000){
     			citySize = 'Small';
+
     		} else if (cityPop[i-1].population < 500000){
     			citySize = 'Medium';
+
     		} else {
     			citySize = 'Large';
     		};
 
-			//add new table cell with the city size
-    		row.insertAdjacentHTML('beforeend','<td>' + citySize + '</td>');
+			row.insertAdjacentHTML('beforeend','<td>' + citySize + '</td>');
     	};
-	})
+    });
 };
 
-//function to add mouse events to table
 function addEvents(){
-	//add random color on mouseover
 
-	// select the table
-	table = document.querySelector("table");
-
-	// add an event listener to capture the user mousing-over the table
-	// change text color to a random rgb value when this occurs
 	document.querySelector("table").addEventListener("mouseover", function(){
+		
 		var color = "rgb(";
-		//generate random color in rbg format
+		
 		for (var i=0; i<3; i++){
 
 			var random = Math.round(Math.random() * 255);
+
 			color += random;
 
 			if (i<2){
 				color += ",";
+			
 			} else {
 				color += ")";
-			};
-		}
-		// style the table with the generated color
-		table.style.color = color;
-	}); 
-
-	// reset text color to black when mouse leaves the table (stops hovering)
-	document.querySelector("table").addEventListener("mouseout", function(){
-		table.style.color = "rgb(0,0,0)";
+		};
+	}
+		
+		document.querySelector("table").style.color = color;
 	});
 
-	// function that shows an alert on click
+	// function to be run after a user clicks
 	function clickme(){
-		alert('Hey, you clicked the table!');
+
+		alert('Hey, you clicked me!');
 	};
 
-	// event listener for the user's click
-	table.addEventListener("click", clickme)
+	// add an event listener to the table for a "click"
+	// run clickme if clicked
+	document.querySelector("table").addEventListener("click", clickme)
 };
 
-//call the initialize function when the document has loaded
-document.addEventListener('DOMContentLoaded',initialize)
+// call the initialize function once the DOM has loaded
+document.addEventListener('DOMContentLoaded',initialize);
