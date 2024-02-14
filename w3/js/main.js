@@ -44,7 +44,7 @@ function initialize(){
 	addColumns(cityPop); // add the city size data in each row under the City Size header
 	addEvents(); // add events for mouseover and click
 
-    debugAjax()
+    debugAjax() // call debugAjax function
 }
 
 // this function adds a new column of data for City Size
@@ -108,26 +108,25 @@ function addEvents(){
 document.addEventListener('DOMContentLoaded',initialize);
 
 
-
-
-// ------ debug_ajax.js ------
-
-
-
+// ------ debug_ajax.js (ACTIVITY 4) ------
 
 function debugCallback(response){
-	console.log("callback function");
-    document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data:<br>' + JSON.stringify(response))
+	// 
+	document.querySelector("#mydiv").insertAdjacentHTML('beforeend', 
+		'<br>GeoJSON data: <br>' + JSON.stringify(response))
 };
 
 function debugAjax(){
 	
 	var myData;
 	
-	fetch("data/MegaCities.geojson")
+	fetch("data/MegaCities.geojson") // fetch geojson
 		.then(function(response){
-			console.log("conversion function");
-            return response.json();
+			return response.json(); // convert geojson to json format
 		})
-        .then(debugCallback);
+		.then(function(response){
+			myData = response;
+			
+			debugCallback(myData); // run callback function once data is prepared
+		})
 };
